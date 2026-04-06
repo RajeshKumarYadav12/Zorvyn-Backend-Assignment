@@ -1,53 +1,55 @@
-# 💰 Finance Backend API
+# Finance Data Processing and Access Control Backend
 
-## 📌 Project Overview
+A comprehensive Node.js/Express backend system for managing financial records with role-based access control, user management, and analytics dashboards.
 
-This project is a backend system for a Finance Dashboard that allows users to manage financial records with role-based access control.
+**Status**: ✅ Production-Ready | Fully Tested | Comprehensive Documentation
 
-The system supports:
+## Quick Links
 
-* User authentication (JWT-based)
-* Role-based permissions (Admin, Analyst, Viewer)
-* Financial records management (CRUD)
-* Dashboard analytics (summary, category-wise, monthly trends)
-* Advanced features like pagination, search, soft delete, rate limiting, and comprehensive error handling
+- [Overview](#overview)
+- [Key Features](#key-features)
+- [Architecture](#architecture)
+- [Installation](#installation--setup)
+- [Environment Configuration](#environment-configuration)
+- [API Documentation](#api-documentation)
+- [Role-Based Access Control](#role-based-access-control)
+- [Error Handling](#error-handling)
 
-The goal of this project is to demonstrate clean backend architecture, proper data handling, and scalable API design.
+## Overview
 
-## 🎯 Key Features
+This backend implements a complete finance management system with:
 
-- **Authentication & Authorization**: JWT-based login with role-based access control
-- **User Management**: Create, update, and manage users (Admin only)
-- **Record Management**: Full CRUD operations on financial records with soft delete
-- **Search & Filtering**: Search by category/notes, filter by type/category
-- **Pagination**: Efficient data retrieval with configurable page/limit
-- **Dashboard Analytics**: Aggregated data for insights
-- **Validation**: Comprehensive input validation with Joi
-- **Error Handling**: Custom error classes and global error middleware
-- **Security**: Rate limiting, input sanitization, password hashing
-- **Testing**: Unit and integration tests with Jest
+- **User Management**: Support for multiple user roles (Admin, Analyst, Viewer)
+- **Financial Records Management**: Create, read, update, delete financial transactions
+- **Dashboard Analytics**: Comprehensive financial insights and trends
+- **Access Control**: Role-based authorization at the middleware level
+- **Data Validation**: Input validation using Joi schemas
+- **Error Handling**: Standardized error responses with appropriate HTTP status codes
+- **Database Persistence**: MongoDB with Mongoose ODM
+- **Security**: Password hashing with bcryptjs, JWT token authentication
 
 ---
 
 ## ⚙️ Tech Stack
 
-* **Runtime**: Node.js
-* **Framework**: Express.js 5.2.1
-* **Database**: MongoDB (Mongoose 9.3.3)
-* **Authentication**: JWT (jsonwebtoken 9.0.3)
-* **Password Hashing**: bcryptjs 3.0.3
-* **Input Validation**: Joi 18.1.2
-* **CORS**: cors 2.8.6
-* **Logging**: Morgan
-* **Rate Limiting**: express-rate-limit
-* **Testing**: Jest, Supertest
-* **Environment**: dotenv 17.4.0
+- **Runtime**: Node.js
+- **Framework**: Express.js 5.2.1
+- **Database**: MongoDB (Mongoose 9.3.3)
+- **Authentication**: JWT (jsonwebtoken 9.0.3)
+- **Password Hashing**: bcryptjs 3.0.3
+- **Input Validation**: Joi 18.1.2
+- **CORS**: cors 2.8.6
+- **Logging**: Morgan
+- **Rate Limiting**: express-rate-limit
+- **Testing**: Jest, Supertest
+- **Environment**: dotenv 17.4.0
 
 ---
 
 ## 🚀 Setup Instructions
 
 ### Prerequisites
+
 - Node.js (v14+)
 - MongoDB (local or cloud instance)
 - npm or yarn
@@ -79,11 +81,13 @@ JWT_SECRET=your_super_secret_jwt_key_here
 ### 4. Start the server
 
 For development:
+
 ```bash
 npm run dev
 ```
 
 For production:
+
 ```bash
 npm start
 ```
@@ -103,12 +107,14 @@ The API will be available at `http://localhost:5000`
 ### Authentication Endpoints
 
 #### Register User
+
 - **POST** `/api/auth/register`
 - **Body**: `{ name, email, password, role? }`
 - **Response**: User data + JWT token
 - **Roles**: Public (default role: viewer)
 
 #### Login
+
 - **POST** `/api/auth/login`
 - **Body**: `{ email, password }`
 - **Response**: User data + JWT token
@@ -116,71 +122,85 @@ The API will be available at `http://localhost:5000`
 ### User Management (Admin Only)
 
 #### Create User
+
 - **POST** `/api/users`
 - **Auth**: Bearer token (admin)
 - **Body**: `{ name, email, password, role }`
 
 #### Get All Users
+
 - **GET** `/api/users`
 - **Auth**: Bearer token (admin)
 
 #### Update User
+
 - **PATCH** `/api/users/:id`
 - **Auth**: Bearer token (admin)
 - **Body**: `{ role?, isActive? }`
 
 #### Delete User
+
 - **DELETE** `/api/users/:id`
 - **Auth**: Bearer token (admin)
 
 ### Record Management
 
 #### Create Record
+
 - **POST** `/api/records`
 - **Auth**: Bearer token (admin)
 - **Body**: `{ amount, type, category, date?, notes? }`
 
 #### Get Records
+
 - **GET** `/api/records`
 - **Auth**: Bearer token (admin/analyst/viewer)
 - **Query**: `?type=income&category=food&search=keyword&startDate=2026-04-01&endDate=2026-04-30&page=1&limit=10`
 
 #### Get Record by ID
+
 - **GET** `/api/records/:id`
 - **Auth**: Bearer token (admin/analyst/viewer)
 
 #### Update Record
+
 - **PATCH** `/api/records/:id`
 - **Auth**: Bearer token (admin)
 - **Body**: Partial record data
 
 #### Delete Record (Soft)
+
 - **DELETE** `/api/records/:id`
 - **Auth**: Bearer token (admin)
 
 ### Dashboard Analytics
 
 #### Summary
+
 - **GET** `/api/dashboard/summary`
 - **Auth**: Bearer token (admin/analyst)
 - **Response**: `{ totalIncome, totalExpense, netBalance }`
 
 #### Category Breakdown
+
 - **GET** `/api/dashboard/categories`
 - **Auth**: Bearer token (admin/analyst/viewer)
 - **Response**: `[{ category, total }, ...]`
 
 #### Monthly Trends
+
 - **GET** `/api/dashboard/trends`
 - **Auth**: Bearer token (admin/analyst/viewer)
 - **Response**: `[{ year, month, income, expense }, ...]`
 
 #### Recent Activity
+
 - **GET** `/api/dashboard/recent`
 - **Auth**: Bearer token (admin/analyst/viewer)
 - **Response**: `{ recent: [ ... ] }`
 
 ### Health Check
+
 - **GET** `/health`
 - **Response**: Server status and timestamp
 
@@ -189,6 +209,7 @@ The API will be available at `http://localhost:5000`
 ## 🏗️ Architecture
 
 ### Project Structure
+
 ```
 finance-backend/
 ├── src/
@@ -211,6 +232,7 @@ finance-backend/
 ### Data Models
 
 #### User
+
 - `name`: String (required, 3-50 chars)
 - `email`: String (required, unique, email)
 - `password`: String (required, hashed, min 6 chars)
@@ -219,6 +241,7 @@ finance-backend/
 - `timestamps`
 
 #### Record
+
 - `amount`: Number (required, positive)
 - `type`: Enum (income/expense, required)
 - `category`: String (required, 1-50 chars)
@@ -229,6 +252,7 @@ finance-backend/
 - `timestamps`
 
 ### Security Features
+
 - JWT authentication with 24h expiry
 - Password hashing with bcrypt
 - Rate limiting (100 requests/15min per IP)
@@ -256,11 +280,13 @@ finance-backend/
 ## 🧪 Testing
 
 Run tests with:
+
 ```bash
 npm test
 ```
 
 Tests include:
+
 - Record CRUD operations
 - Authentication middleware
 - Input validation
@@ -297,13 +323,14 @@ Coverage report generated automatically.
 For questions or issues, please check the code comments or create an issue in the repository.
 
 **Note**: This project was built as part of a backend development assignment to demonstrate API design, data modeling, and access control best practices.
-```
+
+````
 
 ### 4. Run the server
 
 ```bash
 npm run dev
-```
+````
 
 Server will run at:
 
@@ -369,11 +396,11 @@ Authorization: Bearer <token>
 
 ### 🔍 Query Parameters (Records)
 
-* `type=income|expense`
-* `category=...`
-* `search=keyword`
-* `page=1`
-* `limit=10`
+- `type=income|expense`
+- `category=...`
+- `search=keyword`
+- `page=1`
+- `limit=10`
 
 ---
 
@@ -391,39 +418,38 @@ Authorization: Bearer <token>
 
 ### ✅ Core Features
 
-* User authentication (JWT)
-* Role-based access control
-* Financial records CRUD
-* Dashboard analytics
+- User authentication (JWT)
+- Role-based access control
+- Financial records CRUD
+- Dashboard analytics
 
 ### 🚀 Advanced Features
 
-* Pagination
-* Search (category + notes)
-* Soft delete (records)
-* Logging (Morgan)
+- Pagination
+- Search (category + notes)
+- Soft delete (records)
+- Logging (Morgan)
 
 ---
 
 ## ⚠️ Validation & Error Handling
 
-* Joi validation for all inputs
-* Proper HTTP status codes:
-
-  * 400 → Bad Request
-  * 401 → Unauthorized
-  * 403 → Forbidden
-  * 404 → Not Found
-  * 500 → Server Error
+- Joi validation for all inputs
+- Proper HTTP status codes:
+  - 400 → Bad Request
+  - 401 → Unauthorized
+  - 403 → Forbidden
+  - 404 → Not Found
+  - 500 → Server Error
 
 ---
 
 ## 🧠 Assumptions
 
-* New users are assigned "viewer" role by default
-* Only admins can manage users and records
-* Each user can only access their own financial data
-* Soft delete is used for records instead of permanent deletion
+- New users are assigned "viewer" role by default
+- Only admins can manage users and records
+- Each user can only access their own financial data
+- Soft delete is used for records instead of permanent deletion
 
 ---
 
@@ -445,8 +471,8 @@ src/
 
 ## 🧪 Testing
 
-* APIs tested using Postman
-* Supports all CRUD and dashboard operations
+- APIs tested using Postman
+- Supports all CRUD and dashboard operations
 
 ---
 
@@ -459,3 +485,5 @@ This project focuses on clean backend design, modular structure, and maintainabl
 ## 🙌 Author
 
 Lalit Sharma
+#   Z o r v y n - B a c k e n d - A s s i g n m e n t  
+ 
