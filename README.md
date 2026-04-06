@@ -4,17 +4,6 @@ A comprehensive Node.js/Express backend system for managing financial records wi
 
 **Status**: ✅ Production-Ready | Fully Tested | Comprehensive Documentation
 
-## Quick Links
-
-- [Overview](#overview)
-- [Key Features](#key-features)
-- [Architecture](#architecture)
-- [Installation](#installation--setup)
-- [Environment Configuration](#environment-configuration)
-- [API Documentation](#api-documentation)
-- [Role-Based Access Control](#role-based-access-control)
-- [Error Handling](#error-handling)
-
 ## Overview
 
 This backend implements a complete finance management system with:
@@ -484,7 +473,4 @@ This project focuses on clean backend design, modular structure, and maintainabl
 
 ## 🙌 Author
 
-Lalit Sharma
-#   Z o r v y n - B a c k e n d - A s s i g n m e n t  
- #   Z o r v y n - B a c k e n d - A s s i g n m e n t  
- 
+Rajesh Kumar Yadav
